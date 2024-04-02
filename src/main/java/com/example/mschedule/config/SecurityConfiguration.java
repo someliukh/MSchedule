@@ -43,8 +43,9 @@ public class SecurityConfiguration {
                                 .requestMatchers(PUT, "/api/v1/admin/**").hasAnyRole(ADMIN.name())
                                 .requestMatchers(DELETE, "/api/v1/admin/**").hasAnyRole(ADMIN.name())
 
-                                .requestMatchers("/api/v1/management/**").hasAnyRole(ADMIN.name(), MEMBER.name())
-                                .requestMatchers(GET, "/api/v1/management/**").hasAnyAuthority(ADMIN_READ.name(), MEMBER_READ.name())
+                                .requestMatchers(GET, "/api/v1/staff").hasAnyRole(ADMIN.name())
+                                .requestMatchers(POST, "/api/v1/staff/{id}/create-task").hasAnyRole(ADMIN.name())
+                                .requestMatchers(GET, "/api/v1/staff/{id}").hasAnyRole(ADMIN.name(), MEMBER.name())
                                 .anyRequest()
                                 .authenticated()
                 )

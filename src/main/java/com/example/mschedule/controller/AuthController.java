@@ -1,7 +1,7 @@
 package com.example.mschedule.controller;
 
-import com.example.mschedule.dto.AuthRequest;
-import com.example.mschedule.dto.AuthResponse;
+import com.example.mschedule.dto.auth.AuthRequest;
+import com.example.mschedule.dto.auth.AuthResponse;
 import com.example.mschedule.service.impl.AuthServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

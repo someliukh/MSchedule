@@ -1,8 +1,8 @@
 package com.example.mschedule.service.impl;
 
-import com.example.mschedule.dto.AuthRequest;
-import com.example.mschedule.dto.AuthResponse;
-import com.example.mschedule.dto.RegisterRequest;
+import com.example.mschedule.dto.auth.AuthRequest;
+import com.example.mschedule.dto.auth.AuthResponse;
+import com.example.mschedule.dto.auth.RegisterRequest;
 import com.example.mschedule.config.JwtService;
 import com.example.mschedule.service.AuthService;
 import com.example.mschedule.entity.Token;
