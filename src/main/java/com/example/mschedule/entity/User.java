@@ -1,6 +1,7 @@
 package com.example.mschedule.entity;
 
 import com.example.mschedule.enums.Role;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -33,6 +34,10 @@ public class User implements UserDetails {
 
   @OneToMany(mappedBy = "user")
   private List<Token> tokens;
+
+  @JsonManagedReference
+  @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+  private List<Task> tasks;
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {

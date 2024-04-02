@@ -1,4 +1,4 @@
-package com.example.mschedule.dto;
+package com.example.mschedule.dto.auth;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

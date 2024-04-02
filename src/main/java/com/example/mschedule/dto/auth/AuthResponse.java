@@ -1,4 +1,4 @@
-package com.example.mschedule.dto;
+package com.example.mschedule.dto.auth;
 
 import com.example.mschedule.enums.Role;
 import com.fasterxml.jackson.annotation.JsonProperty;

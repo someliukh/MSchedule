@@ -1,5 +1,6 @@
 package com.example.mschedule.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,8 +12,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "schedule")
-public class Schedule {
+@Table(name = "task")
+public class Task {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -21,12 +23,17 @@ public class Schedule {
 
     private String description;
 
-    @Column(name = "is_all_day")
-    private Boolean isAllDay;
+//    private Boolean isAllDay;
 
     @Column(name = "start_time")
     private String startTime;
 
     @Column(name = "end_time")
     private String endTime;
+
+    @JsonBackReference
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "users_id", nullable = false)
+    private User user;
+
 }

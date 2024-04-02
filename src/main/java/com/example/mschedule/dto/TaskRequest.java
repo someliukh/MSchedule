@@ -1,6 +1,5 @@
 package com.example.mschedule.dto;
 
-import com.example.mschedule.enums.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,11 +9,11 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class RegisterRequest {
+public class TaskRequest {
 
-  private String firstname;
-  private String lastname;
-  private String email;
-  private String password;
-  private Role role;
+    private String subject;
+    private String description;
+    private String startTime;
+    private String endTime;
+
 }
