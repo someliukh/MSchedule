@@ -1,7 +1,7 @@
 package com.example.mschedule;
 
+import com.example.mschedule.dto.auth.RegisterRequest;
 import com.example.mschedule.service.impl.AuthServiceImpl;
-import com.example.mschedule.dto.RegisterRequest;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -29,6 +29,15 @@ public class MScheduleApplication {
                     .role(ADMIN)
                     .build();
             System.out.println("Admin token: " + service.register(admin).getAccessToken());
+
+            var member = RegisterRequest.builder()
+                    .firstname("Stepan")
+                    .lastname("Omeliukh")
+                    .email("stepan.omeliukh.work@gmail.com")
+                    .password("Password")
+                    .role(ADMIN)
+                    .build();
+            System.out.println("Member token: " + service.register(member).getAccessToken());
         };
     }
 
