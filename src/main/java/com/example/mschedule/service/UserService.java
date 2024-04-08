@@ -10,4 +10,6 @@ public interface UserService {
 
     List<User> getAllUser();
 
+    Boolean getFreeStatus(User user);
+
 }

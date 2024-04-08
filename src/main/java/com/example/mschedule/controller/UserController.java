@@ -8,6 +8,7 @@ import com.example.mschedule.repository.UserRepository;
 import com.example.mschedule.service.TaskService;
 import com.example.mschedule.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
@@ -31,6 +32,7 @@ public class UserController {
                 .firstname(user.getFirstname())
                 .lastname(user.getLastname())
                 .taskNums(taskService.taskNumber(user.getId()))
+                .isFree(userService.getFreeStatus(user))
                 .build()).toList();
 
         return ResponseEntity.ok(staffList);
@@ -46,19 +48,19 @@ public class UserController {
                 .lastname(user.getLastname())
                 .taskNums(taskService.taskNumber(user.getId()))
                 .tasks(user.getTasks())
+                .isFree(userService.getFreeStatus(user))
                 .build();
 
         return ResponseEntity.ok(response);
     }
 
     @PostMapping("/{id}/create-task")
-    public RedirectView saveTask(@PathVariable Long id, @RequestBody TaskRequest request) {
-        String redirectUrl = "http://localhost:8080/api/v1/staff/" + id;
-        taskService.createTaskForUser(userService.getUserById(Math.toIntExact(id)), request);
-
-        return new RedirectView(redirectUrl);
+    public ResponseEntity<?> saveTask(@PathVariable Long id, @RequestBody TaskRequest request) {
+        Task task = taskService.createTaskForUser(userService.getUserById(Math.toIntExact(id)), request);
+        if (task != null)
+            return ResponseEntity.status(HttpStatus.OK).build();
+        else
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
-
-
 
 }

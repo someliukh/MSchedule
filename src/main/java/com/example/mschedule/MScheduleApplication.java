@@ -8,6 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 import static com.example.mschedule.enums.Role.ADMIN;
+import static com.example.mschedule.enums.Role.MEMBER;
 
 @SpringBootApplication
 public class MScheduleApplication {
@@ -35,7 +36,7 @@ public class MScheduleApplication {
                     .lastname("Omeliukh")
                     .email("stepan.omeliukh.work@gmail.com")
                     .password("Password")
-                    .role(ADMIN)
+                    .role(MEMBER)
                     .build();
             System.out.println("Member token: " + service.register(member).getAccessToken());
         };
