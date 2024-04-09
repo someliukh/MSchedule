@@ -1,15 +1,19 @@
 package com.example.mschedule.service.impl;
 
+import com.cemiltokatli.passwordgenerate.PasswordType;
 import com.example.mschedule.dto.auth.AuthRequest;
 import com.example.mschedule.dto.auth.AuthResponse;
 import com.example.mschedule.dto.auth.RegisterRequest;
 import com.example.mschedule.config.JwtService;
+import com.example.mschedule.enums.Role;
 import com.example.mschedule.service.AuthService;
 import com.example.mschedule.entity.Token;
 import com.example.mschedule.repository.TokenRepository;
 import com.example.mschedule.enums.TokenType;
 import com.example.mschedule.entity.User;
 import com.example.mschedule.repository.UserRepository;
+import com.example.mschedule.service.EmailService;
+import com.example.mschedule.util.PasswordGeneration;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -20,6 +24,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.mail.MessagingException;
 import java.io.IOException;
 
 @Service
@@ -31,16 +36,23 @@ public class AuthServiceImpl implements AuthService {
   private final JwtService jwtService;
   private final AuthenticationManager authenticationManager;
 
+  private final EmailService emailService;
+
   @Override
-  public AuthResponse register(RegisterRequest request) {
+  public AuthResponse register(RegisterRequest request) throws MessagingException {
+    String password = PasswordGeneration.generatePassword(PasswordType.ALL, 10, 15);
+
     var user = User.builder()
         .firstname(request.getFirstname())
         .lastname(request.getLastname())
         .email(request.getEmail())
-        .password(passwordEncoder.encode(request.getPassword()))
-        .role(request.getRole())
+        .password(passwordEncoder.encode(password))
+        .role(Role.MEMBER)
         .build();
     var savedUser = repository.save(user);
+
+    emailService.sendMessageWithPassword(user, password);
+
     var jwtToken = jwtService.generateToken(user);
     var refreshToken = jwtService.generateRefreshToken(user);
     saveUserToken(savedUser, jwtToken);

@@ -25,7 +25,7 @@ public class MScheduleApplication {
             var admin = RegisterRequest.builder()
                     .firstname("Admin")
                     .lastname("Admin")
-                    .email("admin@mail.com")
+                    .email("kr2235yana@gmail.com")
                     .password("Password")
                     .role(ADMIN)
                     .build();
@@ -34,7 +34,7 @@ public class MScheduleApplication {
             var member = RegisterRequest.builder()
                     .firstname("Stepan")
                     .lastname("Omeliukh")
-                    .email("stepan.omeliukh.work@gmail.com")
+                    .email("ctepan2001ome@gmail.com")
                     .password("Password")
                     .role(MEMBER)
                     .build();

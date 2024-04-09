@@ -13,7 +13,6 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
 
-import static com.example.mschedule.enums.Permission.*;
 import static com.example.mschedule.enums.Role.ADMIN;
 import static com.example.mschedule.enums.Role.MEMBER;
 import static org.springframework.http.HttpMethod.*;

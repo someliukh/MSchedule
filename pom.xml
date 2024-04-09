@@ -75,6 +75,17 @@
             <artifactId>spring-security-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>com.sun.mail</groupId>
+            <artifactId>javax.mail</artifactId>
+            <version>1.6.2</version>
+        </dependency>
+        <dependency>
+            <!-- Password Generator @ https://github.com/cemiltokatli/PasswordGenerator -->
+            <groupId>io.github.cemiltokatli.passwordgenerator</groupId>
+            <artifactId>password-generator</artifactId>
+            <version>1.0</version>
+        </dependency>
     </dependencies>
 
     <build>
