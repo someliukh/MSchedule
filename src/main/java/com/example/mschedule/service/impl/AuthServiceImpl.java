@@ -41,13 +41,20 @@ public class AuthServiceImpl implements AuthService {
   @Override
   public AuthResponse register(RegisterRequest request) throws MessagingException {
     String password = PasswordGeneration.generatePassword(PasswordType.ALL, 10, 15);
+    Role role = Role.MEMBER;
+
+    if (request.getRole() != null)
+      role = request.getRole();
+
+    if (request.getPassword() != null)
+      password = request.getPassword();
 
     var user = User.builder()
         .firstname(request.getFirstname())
         .lastname(request.getLastname())
         .email(request.getEmail())
         .password(passwordEncoder.encode(password))
-        .role(Role.MEMBER)
+        .role(role)
         .build();
     var savedUser = repository.save(user);
 
