@@ -11,9 +11,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class TaskRequest {
 
+    private Integer id;
     private String subject;
     private String description;
     private String startTime;
     private String endTime;
 
 }
+

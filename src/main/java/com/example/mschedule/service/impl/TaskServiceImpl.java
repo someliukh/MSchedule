@@ -15,6 +15,7 @@ public class TaskServiceImpl implements TaskService {
     private final TaskRepository taskRepository;
 
     public Task createTaskForUser(User user, TaskRequest request) {
+
         Task task = Task.builder()
                 .subject(request.getSubject())
                 .description(request.getDescription())

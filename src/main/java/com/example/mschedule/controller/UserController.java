@@ -4,14 +4,15 @@ import com.example.mschedule.dto.StaffResponse;
 import com.example.mschedule.dto.TaskRequest;
 import com.example.mschedule.entity.Task;
 import com.example.mschedule.entity.User;
-import com.example.mschedule.repository.UserRepository;
+import com.example.mschedule.repository.TaskRepository;
 import com.example.mschedule.service.TaskService;
 import com.example.mschedule.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.annotations.CompositeType;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.List;
 
@@ -23,6 +24,7 @@ public class UserController {
 
     private final UserService userService;
     private final TaskService taskService;
+    private final TaskRepository taskRepository;
 
     @GetMapping()
     public ResponseEntity<List<StaffResponse>> allStaff() {
@@ -56,12 +58,28 @@ public class UserController {
     }
 
     @PostMapping("/{id}/create-task")
-    public ResponseEntity<?> saveTask(@PathVariable Long id, @RequestBody TaskRequest request) {
-        Task task = taskService.createTaskForUser(userService.getUserById(Math.toIntExact(id)), request);
-        if (task != null)
-            return ResponseEntity.status(HttpStatus.OK).build();
-        else
+    public ResponseEntity<?> saveRemoveTask(@PathVariable Integer id, @RequestBody List<TaskRequest> request) {
+        List<Integer> userTaskIdList = taskRepository.getUserTasksById(id);
+
+//        The Ids should be deleted
+        List<Integer> idsToRemove = userTaskIdList.stream()
+                .filter(ids -> request.stream().noneMatch(task -> task.getId().equals(ids)))
+                .toList();
+        List<Long> wrappedListOfDeleteIds = idsToRemove.stream().map(Long::valueOf).toList();
+        wrappedListOfDeleteIds.forEach(taskRepository::deleteById);
+
+//        The Ids should be added
+        List<Task> savedTasks = request.stream()
+                .filter(element -> !userTaskIdList.contains(element.getId()))
+                .map(element -> taskService.createTaskForUser(userService.getUserById(Math.toIntExact(id)), element))
+                .toList();
+
+        if (savedTasks == null ||
+            savedTasks.stream().allMatch(task -> task == null))
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        else
+            return ResponseEntity.status(HttpStatus.OK).build();
     }
 
 }
+
