@@ -23,8 +23,6 @@ public class Task {
 
     private String description;
 
-//    private Boolean isAllDay;
-
     @Column(name = "start_time")
     private String startTime;
 

@@ -26,6 +26,7 @@ import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
 import java.io.IOException;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -48,6 +49,10 @@ public class AuthServiceImpl implements AuthService {
 
     if (request.getPassword() != null)
       password = request.getPassword();
+
+//    TODO: тут добавити перевірку на існуючий email (запит у БД "select * from user where email = '?';"
+    if (repository.findByEmail(request.getEmail()).isPresent())
+      return null;
 
     var user = User.builder()
         .firstname(request.getFirstname())
